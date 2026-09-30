@@ -656,8 +656,15 @@ const SHARED_MAX_LIMIT = 100;
  * oracle for a secret an operator may have reused elsewhere.
  */
 /** Strip query string and hash: "/pricing?ref=x#plans" → "/pricing". */
+/**
+ * The page a route belongs to: query and hash dropped, and a trailing slash
+ * ignored. Many hosts serve a page at both "/docs" and "/docs/" (a full load
+ * follows the directory redirect, client-side navigation doesn't), and a
+ * comment left at one must be visible from the other.
+ */
 function pathnameOf(route: string): string {
-  return route.split("?")[0].split("#")[0];
+  const path = route.split("?")[0].split("#")[0];
+  return path.replace(/\/+$/, "") || "/";
 }
 
 function keyMatches(presented: string, expected: string): boolean {

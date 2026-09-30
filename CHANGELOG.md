@@ -5,6 +5,11 @@ versioned separately; see [`mcp/`](mcp/).
 
 ## Unreleased
 
+- **Shared review treats `/page` and `/page/` as the same page.** Many hosts
+  serve a page at both (a full load follows the directory redirect, client-side
+  navigation doesn't), so reviewers arriving different ways couldn't see each
+  other's comments. The worker now ignores a trailing slash when matching.
+
 - **The page can say who the reviewer is.** New `reviewer` option
   (`data-reviewer`): pages that already know who's signed in pass their
   identity, the name field disappears, and every comment is attributed to it,
